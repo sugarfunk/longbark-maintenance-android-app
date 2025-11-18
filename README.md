@@ -5,12 +5,16 @@ A native Android application for monitoring and managing 60+ client websites wit
 ## Features
 
 - **Real-time Monitoring**: Track uptime, SSL certificates, broken links, and performance metrics
-- **Push Notifications**: NTFY-based notifications (no Firebase/GMS required)
+- **Invoice Ninja Integration**: Full billing and financial tracking with Invoice Ninja API
+- **Client Management**: Organize and monitor sites by client with financial insights
+- **Billing Dashboard**: View invoices, payments, quotes, and financial stats per client
+- **Push Notifications**: Complete NTFY implementation with JSON parsing and deep links
+- **Biometric Authentication**: Fingerprint/face unlock support for secure access
+- **Deep Linking**: Navigate directly to clients, sites, and notifications from URLs
 - **Offline Support**: Full offline caching with SQLCipher encrypted database
-- **Client Management**: Organize and monitor sites by client
-- **Dashboard**: Overview of all site health statuses
+- **Dashboard**: Overview of all site health statuses with recent alerts
 - **Reports**: Generate and view site health reports
-- **Security**: JWT authentication, biometric unlock, certificate pinning
+- **Security**: JWT authentication, biometric unlock, encrypted database
 - **Material 3 Design**: Modern UI with dynamic theming
 
 ## Technical Stack
@@ -138,6 +142,27 @@ Expected endpoints:
 - `GET /api/reports` - List reports
 - And more...
 
+### Invoice Ninja Integration
+
+Configure Invoice Ninja in app preferences:
+1. Set Invoice Ninja URL (e.g., https://invoicing.co or your self-hosted instance)
+2. Generate API token from Invoice Ninja dashboard
+3. Save API token in app settings
+4. Link sites to Invoice Ninja clients
+
+The app uses these Invoice Ninja endpoints:
+- `GET /api/v1/clients` - List all Invoice Ninja clients
+- `GET /api/v1/clients/{id}` - Get client with invoices, payments, quotes
+- `GET /api/v1/invoices?client_id={id}` - Client invoices
+- `GET /api/v1/payments?client_id={id}` - Client payments
+- `GET /api/v1/quotes?client_id={id}` - Client quotes
+
+**Linking Sites to Clients:**
+- Navigate to site settings
+- Select "Link to Invoice Ninja Client"
+- Choose client from dropdown
+- View billing information in client detail screen
+
 ### NTFY Notifications
 
 Configure NTFY server in the app Settings:
@@ -150,10 +175,27 @@ The app subscribes to topics for real-time alerts.
 
 ### Database Encryption
 
-The app uses SQLCipher for database encryption. The encryption passphrase is hardcoded in `DatabaseModule.kt`. For production, consider:
+The app uses SQLCipher for database encryption. Database schema v2 includes:
+- **Clients table**: Client data with health tracking
+- **Sites table**: Site monitoring data
+- **Notifications table**: Alert history
+- **Reports table**: Generated reports
+- **Site-InvoiceNinja Links table**: Mapping between sites and Invoice Ninja clients
+
+The encryption passphrase is hardcoded in `DatabaseModule.kt`. For production, consider:
 - Storing passphrase in Android Keystore
 - Generating unique passphrase per installation
 - Using user-derived encryption key
+
+### Biometric Authentication
+
+Enable biometric authentication:
+1. Open Settings → Security
+2. Toggle "Enable Biometric Authentication"
+3. System will prompt for fingerprint/face setup if not configured
+4. Biometric prompt appears on app launch
+
+Biometric authentication works alongside password authentication as a convenience feature.
 
 ## Security Features
 
@@ -218,18 +260,49 @@ The project uses standard Kotlin coding conventions:
 5. Build ViewModel in `presentation/<feature>/`
 6. Design UI with Compose in `presentation/<feature>/`
 
-## Known Limitations
+## NEW FEATURES (Latest Update)
 
-Current implementation provides core functionality. Future enhancements:
+### Invoice Ninja Integration
+- Full Invoice Ninja API integration for billing management
+- Link sites to Invoice Ninja clients for unified tracking
+- View invoices, payments, quotes, and financial stats
+- Track overdue invoices and payment history
+- Billing statistics dashboard per client
 
-- **Additional Screens**: Client details, site details, reports viewer, settings
-- **Biometric Auth**: Integration with BiometricPrompt API
-- **Certificate Pinning**: Add production certificate pins
-- **Complete NTFY**: Full JSON parsing and notification types
-- **Widgets**: Home screen widgets
-- **Deep Linking**: Complete deep link handling
+### Biometric Authentication
+- Fingerprint and face recognition support
+- Secure biometric unlock using BiometricPrompt API
+- Settings toggle for biometric authentication
+- Fallback to password authentication
+
+### Complete NTFY Implementation
+- Full JSON message parsing with all NTFY fields
+- Priority-based notification channels (Critical, Warning, Info)
+- Deep link support from notifications
+- Big text style for long messages
+- Custom notification actions
+
+### Deep Linking
+- Universal links support (https://longbark.app/app/*)
+- Custom URL scheme (longbark://*)
+- Navigate to specific clients, sites, and notifications
+- Deep link handling from NTFY notifications
+
+### Client Management
+- Client list with search and filtering
+- Client detail screens (in progress)
+- Site-to-client association
+- Health status tracking per client
+
+## Future Enhancements
+
+- **Client Detail Tabs**: Complete Sites, Billing, and Settings tabs
+- **Site Detail Screens**: Full site management interface
+- **Settings Screen**: Comprehensive app configuration
+- **Reports Viewer**: In-app PDF and HTML report viewing
+- **Widgets**: Home screen widgets with Glance API
 - **Multi-language**: i18n support
-- **Unit Tests**: Comprehensive test coverage
+- **Unit Tests**: Comprehensive test coverage (>70%)
 
 ## API Integration
 

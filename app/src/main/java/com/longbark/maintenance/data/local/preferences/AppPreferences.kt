@@ -50,6 +50,11 @@ class AppPreferences @Inject constructor(
 
         // API
         val API_BASE_URL = stringPreferencesKey("api_base_url")
+
+        // Invoice Ninja
+        val INVOICE_NINJA_URL = stringPreferencesKey("invoice_ninja_url")
+        val INVOICE_NINJA_API_TOKEN = stringPreferencesKey("invoice_ninja_api_token")
+        val INVOICE_NINJA_ENABLED = booleanPreferencesKey("invoice_ninja_enabled")
     }
 
     // Theme
@@ -159,6 +164,37 @@ class AppPreferences @Inject constructor(
     suspend fun setApiBaseUrl(url: String) {
         context.appDataStore.edit { preferences ->
             preferences[PreferencesKeys.API_BASE_URL] = url
+        }
+    }
+
+    // Invoice Ninja
+    val invoiceNinjaUrl: Flow<String> = context.appDataStore.data.map { preferences ->
+        preferences[PreferencesKeys.INVOICE_NINJA_URL] ?: "https://invoicing.co"
+    }
+
+    val invoiceNinjaApiToken: Flow<String?> = context.appDataStore.data.map { preferences ->
+        preferences[PreferencesKeys.INVOICE_NINJA_API_TOKEN]
+    }
+
+    val invoiceNinjaEnabled: Flow<Boolean> = context.appDataStore.data.map { preferences ->
+        preferences[PreferencesKeys.INVOICE_NINJA_ENABLED] ?: false
+    }
+
+    suspend fun setInvoiceNinjaUrl(url: String) {
+        context.appDataStore.edit { preferences ->
+            preferences[PreferencesKeys.INVOICE_NINJA_URL] = url
+        }
+    }
+
+    suspend fun setInvoiceNinjaApiToken(token: String) {
+        context.appDataStore.edit { preferences ->
+            preferences[PreferencesKeys.INVOICE_NINJA_API_TOKEN] = token
+        }
+    }
+
+    suspend fun setInvoiceNinjaEnabled(enabled: Boolean) {
+        context.appDataStore.edit { preferences ->
+            preferences[PreferencesKeys.INVOICE_NINJA_ENABLED] = enabled
         }
     }
 }

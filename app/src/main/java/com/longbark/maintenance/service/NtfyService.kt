@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import com.longbark.maintenance.MainApplication
 import com.longbark.maintenance.R
 import com.longbark.maintenance.presentation.MainActivity
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
@@ -79,14 +80,23 @@ class NtfyService : Service() {
 
     private fun handleNtfyMessage(message: String) {
         try {
-            // TODO: Parse JSON message and create notification
-            // For now, just log it
-            println("NTFY Message: $message")
+            val ntfyMessage = com.google.gson.Gson().fromJson(message, NtfyMessage::class.java)
 
-            // Example: Show notification
+            // Only process message events
+            if (ntfyMessage.event != "message") return
+
+            val title = ntfyMessage.title ?: "LongBark Alert"
+            val channelId = when (ntfyMessage.priority) {
+                4, 5 -> MainApplication.CHANNEL_CRITICAL
+                3 -> MainApplication.CHANNEL_WARNING
+                else -> MainApplication.CHANNEL_INFO
+            }
+
             showNotification(
-                title = "LongBark Alert",
-                message = message
+                title = title,
+                message = ntfyMessage.message,
+                channelId = channelId,
+                deepLink = ntfyMessage.click
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -110,23 +120,37 @@ class NtfyService : Service() {
             .build()
     }
 
-    private fun showNotification(title: String, message: String) {
+    private fun showNotification(
+        title: String,
+        message: String,
+        channelId: String = MainApplication.CHANNEL_CRITICAL,
+        deepLink: String? = null
+    ) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val intent = if (deepLink != null) {
+            Intent(Intent.ACTION_VIEW, android.net.Uri.parse(deepLink)).apply {
+                `package` = packageName
+            }
+        } else {
+            Intent(this, MainActivity::class.java)
+        }
 
         val pendingIntent = PendingIntent.getActivity(
             this,
-            0,
-            Intent(this, MainActivity::class.java),
-            PendingIntent.FLAG_IMMUTABLE
+            System.currentTimeMillis().toInt(),
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val notification = NotificationCompat.Builder(this, MainApplication.CHANNEL_CRITICAL)
+        val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(title)
             .setContentText(message)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .build()
 
         notificationManager.notify(

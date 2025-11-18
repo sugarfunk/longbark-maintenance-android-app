@@ -47,4 +47,8 @@ object DatabaseModule {
 
     @Provides
     fun provideReportDao(database: LongBarkDatabase): ReportDao = database.reportDao()
+
+    @Provides
+    fun provideSiteInvoiceNinjaLinkDao(database: LongBarkDatabase): SiteInvoiceNinjaLinkDao =
+        database.siteInvoiceNinjaLinkDao()
 }

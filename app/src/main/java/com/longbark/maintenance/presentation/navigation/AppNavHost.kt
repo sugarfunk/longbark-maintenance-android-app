@@ -3,9 +3,13 @@ package com.longbark.maintenance.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.longbark.maintenance.presentation.auth.LoginScreen
+import com.longbark.maintenance.presentation.client.ClientListScreen
 import com.longbark.maintenance.presentation.dashboard.DashboardScreen
 
 @Composable
@@ -29,11 +33,53 @@ fun AppNavHost(
             )
         }
 
-        composable(Screen.Dashboard.route) {
+        composable(
+            route = Screen.Dashboard.route,
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://dashboard" },
+                navDeepLink { uriPattern = "https://longbark.app/app/dashboard" }
+            )
+        ) {
             DashboardScreen(navController = navController)
         }
 
-        // TODO: Add more screens (Clients, Sites, Reports, Notifications, Settings)
+        composable(
+            route = Screen.Clients.route,
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://clients" },
+                navDeepLink { uriPattern = "https://longbark.app/app/clients" }
+            )
+        ) {
+            ClientListScreen(
+                onClientClick = { clientId ->
+                    navController.navigate(Screen.ClientDetail.createRoute(clientId))
+                }
+            )
+        }
+
+        composable(
+            route = Screen.ClientDetail.route,
+            arguments = listOf(navArgument("clientId") { type = NavType.StringType }),
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://client/{clientId}" },
+                navDeepLink { uriPattern = "https://longbark.app/app/client/{clientId}" }
+            )
+        ) {
+            // TODO: Implement ClientDetailScreen
+        }
+
+        composable(
+            route = Screen.SiteDetail.route,
+            arguments = listOf(navArgument("siteId") { type = NavType.StringType }),
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://site/{siteId}" },
+                navDeepLink { uriPattern = "https://longbark.app/app/site/{siteId}" }
+            )
+        ) {
+            // TODO: Implement SiteDetailScreen
+        }
+
+        // TODO: Add more screens (Reports, Notifications, Settings)
     }
 }
 
