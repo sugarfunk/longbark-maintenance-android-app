@@ -35,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindDashboardRepository(
         dashboardRepositoryImpl: DashboardRepositoryImpl
     ): DashboardRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindInvoiceNinjaRepository(
+        invoiceNinjaRepositoryImpl: InvoiceNinjaRepositoryImpl
+    ): InvoiceNinjaRepository
 }

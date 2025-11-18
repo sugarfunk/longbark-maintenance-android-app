@@ -10,9 +10,10 @@ import com.longbark.maintenance.data.local.entities.*
         ClientEntity::class,
         SiteEntity::class,
         NotificationEntity::class,
-        ReportEntity::class
+        ReportEntity::class,
+        SiteInvoiceNinjaLinkEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class LongBarkDatabase : RoomDatabase() {
@@ -20,6 +21,7 @@ abstract class LongBarkDatabase : RoomDatabase() {
     abstract fun siteDao(): SiteDao
     abstract fun notificationDao(): NotificationDao
     abstract fun reportDao(): ReportDao
+    abstract fun siteInvoiceNinjaLinkDao(): SiteInvoiceNinjaLinkDao
 
     companion object {
         const val DATABASE_NAME = "longbark_database"
