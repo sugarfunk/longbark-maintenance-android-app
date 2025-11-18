@@ -9,8 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.longbark.maintenance.presentation.auth.LoginScreen
+import com.longbark.maintenance.presentation.client.ClientDetailScreen
 import com.longbark.maintenance.presentation.client.ClientListScreen
 import com.longbark.maintenance.presentation.dashboard.DashboardScreen
+import com.longbark.maintenance.presentation.settings.SettingsScreen
 
 @Composable
 fun AppNavHost(
@@ -65,7 +67,12 @@ fun AppNavHost(
                 navDeepLink { uriPattern = "https://longbark.app/app/client/{clientId}" }
             )
         ) {
-            // TODO: Implement ClientDetailScreen
+            ClientDetailScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onSiteClick = { siteId ->
+                    navController.navigate(Screen.SiteDetail.createRoute(siteId))
+                }
+            )
         }
 
         composable(
@@ -76,10 +83,43 @@ fun AppNavHost(
                 navDeepLink { uriPattern = "https://longbark.app/app/site/{siteId}" }
             )
         ) {
-            // TODO: Implement SiteDetailScreen
+            // SiteDetailScreen - TODO: Create full implementation
         }
 
-        // TODO: Add more screens (Reports, Notifications, Settings)
+        composable(
+            route = Screen.Settings.route,
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://settings" },
+                navDeepLink { uriPattern = "https://longbark.app/app/settings" }
+            )
+        ) {
+            SettingsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLogout = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = Screen.Reports.route,
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://reports" }
+            )
+        ) {
+            // ReportsScreen - TODO: Create full implementation
+        }
+
+        composable(
+            route = Screen.Notifications.route,
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "longbark://notifications" }
+            )
+        ) {
+            // NotificationsScreen - TODO: Create full implementation
+        }
     }
 }
 

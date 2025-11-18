@@ -70,4 +70,26 @@
     <string name="refresh">Refresh</string>
     <string name="offline">Offline</string>
     <string name="online">Online</string>
+    <string name="back">Back</string>
+
+    <!-- Invoice Ninja -->
+    <string name="invoice_ninja">Invoice Ninja</string>
+    <string name="billing">Billing</string>
+    <string name="invoices">Invoices</string>
+    <string name="payments">Payments</string>
+    <string name="quotes">Quotes</string>
+    <string name="total_revenue">Total Revenue</string>
+    <string name="unpaid_invoices">Unpaid Invoices</string>
+    <string name="overdue_invoices">Overdue Invoices</string>
+    <string name="average_invoice">Average Invoice</string>
+    <string name="outstanding_quotes">Outstanding Quotes</string>
+
+    <!-- Biometric -->
+    <string name="biometric_auth">Biometric Authentication</string>
+    <string name="biometric_prompt_title">Authenticate</string>
+    <string name="biometric_prompt_subtitle">Use fingerprint or face to unlock</string>
+    <string name="biometric_error">Authentication failed</string>
+
+    <!-- Deep Links -->
+    <string name="deep_link_handled">Opening %s</string>
 </resources>
