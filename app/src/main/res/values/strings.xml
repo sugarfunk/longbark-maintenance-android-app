@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LongBark</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_clients">Clients</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Auth -->
+    <string name="login_title">Welcome to LongBark</string>
+    <string name="login_subtitle">Monitor your sites with ease</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="login_error">Login failed. Please check your credentials.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="total_sites">Total Sites</string>
+    <string name="healthy_sites">Healthy</string>
+    <string name="warning_sites">Warnings</string>
+    <string name="critical_sites">Critical</string>
+    <string name="recent_alerts">Recent Alerts</string>
+    <string name="run_all_checks">Run All Checks</string>
+    <string name="view_reports">View Reports</string>
+    <string name="add_site">Add Site</string>
+    <string name="last_sync">Last sync: %s</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+
+    <!-- Clients -->
+    <string name="clients_title">Clients</string>
+    <string name="search_clients">Search clients</string>
+    <string name="no_clients">No clients found</string>
+
+    <!-- Sites -->
+    <string name="sites_title">Sites</string>
+    <string name="site_health">Health</string>
+    <string name="wordpress_info">WordPress</string>
+    <string name="seo_info">SEO</string>
+    <string name="reports_tab">Reports</string>
+    <string name="settings_tab">Settings</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notifications</string>
+    <string name="mark_all_read">Mark All Read</string>
+    <string name="no_notifications">No notifications</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="account_settings">Account</string>
+    <string name="notification_settings">Notifications</string>
+    <string name="sync_settings">Sync</string>
+    <string name="display_settings">Display</string>
+    <string name="privacy_settings">Privacy</string>
+    <string name="advanced_settings">Advanced</string>
+
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="refresh">Refresh</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+</resources>
