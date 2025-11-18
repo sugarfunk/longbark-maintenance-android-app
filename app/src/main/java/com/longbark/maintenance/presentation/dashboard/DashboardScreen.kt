@@ -54,25 +54,25 @@ fun DashboardScreen(
                     icon = { Icon(Icons.Default.People, contentDescription = null) },
                     label = { Text("Clients") },
                     selected = false,
-                    onClick = { /* TODO: Navigate to clients */ }
+                    onClick = { navController.navigate("clients") }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Article, contentDescription = null) },
                     label = { Text("Reports") },
                     selected = false,
-                    onClick = { /* TODO: Navigate to reports */ }
+                    onClick = { navController.navigate("reports") }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Notifications, contentDescription = null) },
                     label = { Text("Alerts") },
                     selected = false,
-                    onClick = { /* TODO: Navigate to notifications */ }
+                    onClick = { navController.navigate("notifications") }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Settings, contentDescription = null) },
                     label = { Text("Settings") },
                     selected = false,
-                    onClick = { /* TODO: Navigate to settings */ }
+                    onClick = { navController.navigate("settings") }
                 )
             }
         }
